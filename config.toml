@@ -2,17 +2,17 @@
 address = "0.0.0.0:9000"
 
 [db]
-host = "listmonk_db"
+host = "${DB_HOST}"
 port = 5432
-user = "listmonk"
-password = "listmonk"
-database = "listmonk"
-
+user = "${DB_USER}"
+password = "${DB_PASSWORD}"
+database = "${DB_NAME}"
 ssl_mode = "disable"
 max_open = 25
 max_idle = 25
 max_lifetime = "300s"
 params = ""
+
 
 [api]
 enable = true
