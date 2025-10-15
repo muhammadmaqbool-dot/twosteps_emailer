@@ -2,10 +2,10 @@ services:
   - type: web
     name: listmonk
     plan: starter
+    env: docker
     image:
       url: ghcr.io/knadh/listmonk:latest
-    startCommand: >
-      /listmonk/listmonk --config /listmonk/config.toml
+    startCommand: "/listmonk/listmonk --config /listmonk/config.toml"
     envVars:
       - key: LISTMONK_db__user
         value: twosteps_db_user
