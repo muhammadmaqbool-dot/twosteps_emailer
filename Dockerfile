@@ -37,3 +37,33 @@ RUN yarn install --frozen-lockfile
 
 # Copy the remaining frontend source
 COPY frontend/ ./
+
+# Build frontend
+RUN yarn build
+
+
+# -------------------------------
+# Stage 3: Final runtime image
+# -------------------------------
+FROM alpine:latest
+
+# Install CA certs for HTTPS connections
+RUN apk --no-cache add ca-certificates
+
+# Set working directory
+WORKDIR /listmonk
+
+# Copy backend binary
+COPY --from=backend-builder /app/listmonk ./
+
+# Copy config.toml
+COPY config.toml ./
+
+# Copy frontend built static files
+COPY --from=frontend-builder /app/frontend/dist ./static/public/
+
+# Expose Listmonk port
+EXPOSE 9000
+
+# Start the application
+CMD ["./listmonk"]
