@@ -28,6 +28,7 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 EXPOSE 9000
 
-CMD ["/listmonk/listmonk", "--config", "env"]
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["/listmonk/listmonk", "--config", "/listmonk/config.toml"]
 
 
