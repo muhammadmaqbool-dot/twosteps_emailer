@@ -16,7 +16,7 @@ RUN go build -o listmonk ./cmd
 # Stage 2: Run stage
 FROM alpine:latest
 
-RUN apk --no-cache add ca-cert
+RUN apk --no-cache add ca-certificates
 
 WORKDIR /listmonk
 
