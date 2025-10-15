@@ -20,15 +20,17 @@ RUN apk --no-cache add ca-certificates tzdata shadow su-exec
 
 WORKDIR /listmonk
 
-# Copy compiled binary from builder
+# Copy compiled binary and required files from builder
 COPY --from=builder /app/listmonk .
-COPY docker-entrypoint.sh /usr/local/bin/
+COPY --from=builder /app/static ./static
+COPY --from=builder /app/i18n ./i18n
+COPY --from=builder /app/config.toml.sample ./config.toml.sample
 
+# Copy entrypoint
+COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 EXPOSE 9000
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["/listmonk/listmonk", "--config", "/listmonk/config.toml"]
-
-
