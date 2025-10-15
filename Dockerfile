@@ -35,8 +35,7 @@ RUN mkdir -p ../static/public/static
 RUN yarn install --frozen-lockfile
 
 # Copy the remaining frontend source
-COPY frontend/ ./
-
+COPY frontend/. ./
 # Build frontend **without running ESLint**
 # If your package.json has a "build" script that runs ESLint, we override it here
 RUN yarn build --max-warnings=0 || true
