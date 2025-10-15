@@ -7,10 +7,10 @@ WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
 
-# Copy the entire source code
+# Copy entire source code
 COPY . .
 
-# Build the listmonk binary
+# Build listmonk binary
 RUN go build -o listmonk ./cmd
 
 # Stage 2: Run stage
@@ -21,19 +21,11 @@ RUN apk --no-cache add ca-certificates
 
 WORKDIR /listmonk
 
-# Copy the listmonk binary
-COPY --from=builder /app/listmonk .
+# Copy everything from builder stage
+COPY --from=builder /app /listmonk
 
-# Copy all necessary static and i18n files
-COPY --from=builder /app/static ./static
-COPY --from=builder /app/i18n ./i18n
-
-# Copy config files (optional: Render will override via environment variables)
-COPY --from=builder /app/config.toml ./config.toml
-COPY --from=builder /app/config.toml.sample ./config.toml.sample
-
-# Expose Listmonk port
+# Expose port
 EXPOSE 9000
 
-# Start Listmonk
+# Run listmonk
 CMD ["./listmonk"]
