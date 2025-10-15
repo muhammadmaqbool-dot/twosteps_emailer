@@ -16,21 +16,20 @@ RUN go build -o listmonk ./cmd
 # Stage 2: Run stage
 FROM alpine:latest
 
-RUN apk --no-cache add ca-certificates tzdata shadow su-exec
+RUN apk --no-cache add ca-cert
 
 WORKDIR /listmonk
 
-# Copy compiled binary and required files from builder
+# Copy binary from builder
 COPY --from=builder /app/listmonk .
+
+# Copy static files needed by listmonk
 COPY --from=builder /app/static ./static
 COPY --from=builder /app/i18n ./i18n
-COPY --from=builder /app/config.toml.sample ./config.toml.sample
+COPY --from=builder /app/config.toml ./config.toml
 
-# Copy entrypoint
-COPY docker-entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
-
+# Expose the port
 EXPOSE 9000
 
-ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["/listmonk/listmonk", "--config", "/listmonk/config.toml"]
+# Run listmonk
+CMD ["./listmonk"]
