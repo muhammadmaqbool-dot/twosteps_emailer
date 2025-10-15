@@ -2,6 +2,7 @@ services:
   - type: web
     name: listmonk
     env: docker
+    image: ghcr.io/knadh/listmonk:latest
     plan: starter
     envVars:
       - key: LISTMONK_db__user
