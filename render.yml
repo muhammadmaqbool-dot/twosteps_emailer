@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: listmonk
+    env: docker
+    plan: basic
+    startCommand: >
+      sh -c "/listmonk/listmonk --install --idempotent --yes --config /listmonk/config.toml &&
+             /listmonk/listmonk --upgrade --yes --config /listmonk/config.toml &&
+             /listmonk/listmonk --config /listmonk/config.toml"
+    envVars:
+      - key: LISTMONK_db__user
+        value: twosteps_db_user
+      - key: LISTMONK_db__password
+        value: kDCh4C4LsI2Y438GPc71S5bO7Sr3rdda
+      - key: LISTMONK_db__database
+        value: twosteps_db
+      - key: LISTMONK_db__host
+        value: dpg-d3n5bkj3fgac73abqdog-a
+      - key: LISTMONK_db__port
+        value: 5432
+      - key: LISTMONK_db__ssl_mode
+        value: disable

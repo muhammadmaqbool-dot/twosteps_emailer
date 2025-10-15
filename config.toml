@@ -2,11 +2,11 @@
 address = "0.0.0.0:9000"
 
 [db]
-host = "${DB_HOST}"
+host = "dpg-d3n5bkj3fgac73abqdog-a"
 port = 5432
-user = "${DB_USER}"
-password = "${DB_PASSWORD}"
-database = "${DB_NAME}"
+user = "twosteps_db_user"
+password = "kDCh4C4LsI2Y438GPc71S5bO7Sr3rdda"
+database = "twosteps_db"
 ssl_mode = "disable"
 max_open = 25
 max_idle = 25
