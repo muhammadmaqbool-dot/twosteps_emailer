@@ -22,7 +22,6 @@ WORKDIR /listmonk
 
 # Copy compiled binary from builder
 COPY --from=builder /app/listmonk .
-COPY config.toml.sample config.toml
 COPY docker-entrypoint.sh /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
@@ -30,4 +29,4 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 EXPOSE 9000
 
 ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["/listmonk/listmonk", "--config", "/listmonk/config.toml"]
+CMD ["/listmonk/listmonk"]
