@@ -2,11 +2,7 @@ services:
   - type: web
     name: listmonk
     env: docker
-    plan: basic
-    startCommand: >
-      sh -c "/listmonk/listmonk --install --idempotent --yes --config /listmonk/config.toml &&
-             /listmonk/listmonk --upgrade --yes --config /listmonk/config.toml &&
-             /listmonk/listmonk --config /listmonk/config.toml"
+    plan: starter
     envVars:
       - key: LISTMONK_db__user
         value: twosteps_db_user
