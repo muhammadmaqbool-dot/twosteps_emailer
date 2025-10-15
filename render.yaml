@@ -2,7 +2,8 @@ services:
   - type: web
     name: listmonk
     plan: starter
-    image: ghcr.io/knadh/listmonk:latest
+    image:
+      url: ghcr.io/knadh/listmonk:latest
     envVars:
       - key: LISTMONK_db__user
         value: twosteps_db_user
