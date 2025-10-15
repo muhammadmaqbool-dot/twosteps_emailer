@@ -26,36 +26,14 @@ WORKDIR /app/frontend
 # Copy package files
 COPY frontend/package.json frontend/yarn.lock ./
 
+# Create empty .eslintignore to avoid ESLint error
+RUN touch .eslintignore
+
+# Create static folder before install (fix altcha issue)
+RUN mkdir -p ../static/public/static
+
 # Install dependencies
 RUN yarn install --frozen-lockfile
 
-# Fix altcha copy issue (ensure directory exists)
-RUN mkdir -p ../static/public/static && \
-    cp node_modules/altcha/dist/altcha.umd.cjs ../static/public/static/altcha.umd.js
-
-# Copy the remaining frontend source and build
+# Copy the remaining frontend source
 COPY frontend/ ./
-RUN yarn build
-
-
-# -------------------------------
-# Stage 3: Final runtime image
-# -------------------------------
-FROM alpine:latest
-
-# Install CA certs for HTTPS connections
-RUN apk --no-cache add ca-certificates
-
-WORKDIR /listmonk
-
-# Copy backend binary
-COPY --from=backend-builder /app/listmonk ./
-
-# Copy static files (built frontend)
-COPY --from=frontend-builder /app/frontend/dist ./static/public/
-
-# Expose default Listmonk port
-EXPOSE 9000
-
-# Start the app
-CMD ["./listmonk"]
