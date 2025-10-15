@@ -1,10 +1,8 @@
 services:
   - type: web
     name: listmonk
-    plan: starter
     env: docker
-    image:
-      url: ghcr.io/knadh/listmonk:latest
+    plan: starter
     envVars:
       - key: LISTMONK_db__user
         value: twosteps_db_user
