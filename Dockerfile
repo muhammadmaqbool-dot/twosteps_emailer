@@ -57,6 +57,9 @@ COPY --from=backend-builder /app/listmonk ./
 # Copy built frontend
 COPY --from=frontend-builder /app/frontend/dist ./static/public/
 
+# Copy original static assets (important!)
+COPY static ./static
+
 # Copy config files
 COPY config.toml ./
 COPY config.toml.sample ./static/
