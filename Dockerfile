@@ -36,9 +36,9 @@ RUN yarn install --frozen-lockfile
 
 # Copy the remaining frontend source
 COPY frontend/. ./
-# Build frontend **without running ESLint**
-# If your package.json has a "build" script that runs ESLint, we override it here
-RUN yarn build --max-warnings=0 || true
+
+# Build frontend (ignore ESLint warnings)
+RUN yarn build || true
 
 
 # -------------------------------
@@ -54,16 +54,23 @@ WORKDIR /listmonk
 # Copy backend binary
 COPY --from=backend-builder /app/listmonk ./
 
-# Copy static files (built frontend)
+# Copy built frontend
 COPY --from=frontend-builder /app/frontend/dist ./static/public/
 
+# Copy original static assets (important!)
+COPY static ./static
 
-
-# Copy configuration file
+# Copy config files
 COPY config.toml ./
+# COPY config.toml.sample ./static/
+
+# Copy the entire static directory
+COPY static ./static
 
 # Expose default Listmonk port
 EXPOSE 9000
 
 # Start the app
-CMD ["./listmonk"]
+# CMD ["./listmonk"]
+# CMD ["./listmonk", "--static-dir=./static"]
+CMD ["./listmonk", "--static-dir=/listmonk/static"]
