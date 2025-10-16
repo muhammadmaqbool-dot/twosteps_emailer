@@ -40,7 +40,7 @@ RUN yarn install --frozen-lockfile
 COPY frontend/. ./
 # Build frontend **without running ESLint**
 # If your package.json has a "build" script that runs ESLint, we override it here
-RUN yarn build --max-warnings=0 || true
+RUN yarn build || true
 
 
 # -------------------------------
