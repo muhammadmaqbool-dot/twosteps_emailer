@@ -62,7 +62,10 @@ COPY static ./static
 
 # Copy config files
 COPY config.toml ./
-COPY config.toml.sample ./static/
+# COPY config.toml.sample ./static/
+
+# Copy the entire static directory
+COPY static ./static
 
 # Expose default Listmonk port
 EXPOSE 9000
