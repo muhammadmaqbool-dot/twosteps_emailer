@@ -57,7 +57,7 @@ COPY --from=backend-builder /app/listmonk ./
 # Copy built frontend
 COPY --from=frontend-builder /app/frontend/dist ./static/public/
 
-# ✅ Copy config files
+# Copy config files
 COPY config.toml ./
 COPY config.toml.sample ./static/
 
@@ -65,4 +65,5 @@ COPY config.toml.sample ./static/
 EXPOSE 9000
 
 # Start the app
-CMD ["./listmonk"]
+# CMD ["./listmonk"]
+CMD ["./listmonk", "--static-dir=./static"]
