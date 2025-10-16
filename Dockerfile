@@ -29,6 +29,7 @@ WORKDIR /app/frontend
 COPY frontend/package.json frontend/yarn.lock ./
 COPY static/config.toml.sample ./static/
 
+
 # Create static folder before install (fix altcha issue)
 RUN mkdir -p ../static/public/static
 
