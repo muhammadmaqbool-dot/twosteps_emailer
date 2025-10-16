@@ -27,8 +27,6 @@ WORKDIR /app/frontend
 
 # Copy package files
 COPY frontend/package.json frontend/yarn.lock ./
-COPY config.toml.sample ./static/
-
 
 # Create static folder before install (fix altcha issue)
 RUN mkdir -p ../static/public/static
@@ -38,8 +36,8 @@ RUN yarn install --frozen-lockfile
 
 # Copy the remaining frontend source
 COPY frontend/. ./
-# Build frontend **without running ESLint**
-# If your package.json has a "build" script that runs ESLint, we override it here
+
+# Build frontend (ignore ESLint warnings)
 RUN yarn build || true
 
 
@@ -56,13 +54,12 @@ WORKDIR /listmonk
 # Copy backend binary
 COPY --from=backend-builder /app/listmonk ./
 
-# Copy static files (built frontend)
+# Copy built frontend
 COPY --from=frontend-builder /app/frontend/dist ./static/public/
 
-
-
-# Copy configuration file
+# ✅ Copy config files
 COPY config.toml ./
+COPY config.toml.sample ./static/
 
 # Expose default Listmonk port
 EXPOSE 9000
