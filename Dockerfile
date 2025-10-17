@@ -75,4 +75,6 @@ EXPOSE 9000
 # Start the app
 # CMD ["./listmonk"]
 # CMD ["./listmonk", "--static-dir=./static"]
-CMD ["./listmonk", "--static-dir=/listmonk/static"]
+#CMD ["./listmonk", "--static-dir=/listmonk/static"]
+CMD ["./listmonk", "--config", "/listmonk/static/config.toml", "--static-dir=/listmonk/static"]
+
