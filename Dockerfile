@@ -27,6 +27,8 @@ WORKDIR /app/frontend
 
 # Copy package files
 COPY frontend/package.json frontend/yarn.lock ./
+COPY static/config.toml ./static/
+
 
 # Create static folder before install (fix altcha issue)
 RUN mkdir -p ../static/public/static
@@ -61,7 +63,7 @@ COPY --from=frontend-builder /app/frontend/dist ./static/public/
 COPY static ./static
 
 # Copy config files
-COPY config.toml ./
+#COPY config.toml ./
 # COPY config.toml.sample ./static/
 
 # Copy the entire static directory
